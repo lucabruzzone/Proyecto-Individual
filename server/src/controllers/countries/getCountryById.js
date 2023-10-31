@@ -5,8 +5,8 @@ async function getCountryById(req, res) {
     try {
         // extraemos el id pasado por params
         // luego nos aseguramos de manejar solo mayúsculas porque así está el ID en la base de datos
-        let { id } =  req.params;
-        if(!id) throw Error('Faltan datos');
+        let { id } = req.params;
+        if (!id) throw Error('Faltan datos');
         id = id.toUpperCase();
         const country = await Country.findOne({ where: { ID: id } });
         if (!country) throw Error("país no encontrado");

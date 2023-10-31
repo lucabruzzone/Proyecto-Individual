@@ -7,9 +7,7 @@ async function getAllCountries(req, res) {
         // hacemos un map para extraer la capital de cada país y limpiar el string que contiene símbolos indeseados
         const allCountries = data.map(country => {
             let capital = country.capital;
-            capital = capital.replace(/\{/g, '');
-            capital = capital.replace(/\}/g, '');
-            capital = capital.replace(/"/g, '');
+            capital = capital.replace(/[{}, "]/g, '');
             capital = capital.replace(/\\/g, '');
             return {
                 ID: country.ID,

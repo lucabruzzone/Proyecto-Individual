@@ -6,7 +6,7 @@ async function getCountryByName(req, res) {
     try {
         // extraemos el nombre pasado por query
         let { name } = req.query;
-        if(!name) throw Error('Faltan datos');
+        if (!name) throw Error('Faltan datos');
         const resultados = await Country.findAll({
             // usamos el operador 'iLike' de Sequelize para que la base de datos sea insensible a minúsculas o mayúsculas
             //esto se hace para que el usuario no se preocupe si escribe con mayúsculas o minúsculas

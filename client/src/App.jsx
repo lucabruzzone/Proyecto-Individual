@@ -1,34 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import styles from './App.module.css';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { HOME, FORM, DETAIL, URL, COUNTRIES } from './utils/pathroutes';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import LandingPage from './components/landingPage/LandingPage';
+import Home from './components/home/Home';
+import Form from './components/form/Form';
+import Detail from './components/detail/Detail';
+import NavBar from './components/navBar/NavBar';
+import Footer from './components/Footer/Footer';
+import { actionInitialCountries } from './redux/actions';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  async function getInitialCountries() {
+    try {
+      const { data } = await axios(`${URL}/${COUNTRIES}`);
+      if (data.length) {
+        dispatch(actionInitialCountries(data));
+      }
+      else throw Error('La carga de los países no fue exitosa')
+    } catch (error) {
+      console(error.message);
+    }
+  }
+
+  useEffect(() => {
+    getInitialCountries();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className='App' id={styles.mainView}>
+      <NavBar />
+      <Routes>
+        <Route path='/' element={<LandingPage />} />
+        <Route path={HOME} element={<Home />} />
+        <Route path={FORM} element={<Form />} />
+        <Route path={`${DETAIL}/:id`} element={<Detail />} />
+      </Routes>
+      {location.pathname !== '/' && <Footer />}
+    </div>
   )
 }
 
