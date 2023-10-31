@@ -1,7 +1,7 @@
 import styles from './Form.module.css';
 import axios from 'axios';
 import flagIcon from '../../img/flag-solid.svg';
-import { HOME, COUNTRY, URL } from '../../utils/pathroutes';
+import { HOME, COUNTRY, URL, ACTIVITIES } from '../../utils/pathroutes';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
@@ -13,13 +13,19 @@ function Form() {
     const renderCountries = useSelector(state => state.renderCountries);
     const [displayedTable, setDisplayedTable] = useState(false);
     const [formCompleted, setFormCompleted] = useState(false);
+    const [displayedSelectedCountries, setDisplayedSelectedCountries] = useState(false);
+    const [valueSearch, setValueSearch] = useState('');
     const [newActivity, setNewActivity] = useState({
         nombre: '',
         dificultad: 0,
         duracion: 0,
         temporada: '',
-        paises: ''
+        paises: []
     });
+
+    function handleMiniTable() {
+        setDisplayedSelectedCountries(!displayedSelectedCountries)
+    }
 
     function handleInput(e) {
         const value = e.target.value;
@@ -27,23 +33,17 @@ function Form() {
         const title = e.target.title;
         const titlParse = parseInt(title);
         if (title || id === 'dificultad') setNewActivity({ ...newActivity, dificultad: titlParse });
-        if (id === 'paises') setNewActivity({ ...newActivity, paises: value });
         if (id === 'nombre') setNewActivity({ ...newActivity, nombre: value });
         if (id === 'Verano' || id === 'Otoño' || id === 'Invierno' || id === 'Primavera') setNewActivity({ ...newActivity, temporada: id });
         if (id === 'duracion') setNewActivity({ ...newActivity, duracion: value });
     }
 
-    function handleFocus() {
-        setDisplayedTable(true);
-    }
-
-    function handleBlur() {
-        setDisplayedTable(false);
-    }
-
     async function handleSearch(e) {
         try {
             const value = e.target.value;
+            // seteamos el estado valueSearch para no tener conflicos al seleccionar el país en la tabla 
+            // ya que al clickear el país en la tabla escribirá automáticamente el nombre del país en el input y se bloquea la escritura del input;
+            setValueSearch(value);
             if (value !== '') {
                 const { data } = await axios(`${URL}/${COUNTRY}?name=${value}`);
                 if (data) {
@@ -57,8 +57,47 @@ function Form() {
         }
     }
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    function handleCountrySelect(e) {
+        const countryName = e.target.id;
+        // seteamos el estado valueSearch para que se escriba automáticamente en el input al seleccionar el país en la tabla:
+        setValueSearch(countryName);
+        // luego buscamos si el país seleccionado ya lo habíamos ingresado, para que no se repitan:
+        const match = newActivity.paises.some(nombre => {
+            return nombre === countryName;
+        })
+        if (!match) setNewActivity({ ...newActivity, paises: [...newActivity.paises, countryName] });
+    }
+
+    function deleteCountry(e) {
+        const name = e.target.title;
+        const newArray = newActivity.paises.filter(country => {
+            return country !== name;
+        })
+        setNewActivity({ ...newActivity, paises: newArray })
+    }
+
+    async function handleSubmit(e) {
+        // nos aseguramos una vez más de que los datos del formulario estén completos
+        try {
+            if (newActivity.paises.length) {
+                const { data } = axios.post(`${URL}/${ACTIVITIES}`, newActivity);
+                if (data) alert('Actividad creada con éxito');
+            }
+            e.preventDefault();
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
+    function handleFocus() {
+        setDisplayedTable(true);
+    }
+
+    function handleBlur() {
+        // lo hacemos en setTimeOut para que no se cierre la tabla antes de seleccionar un país
+        setTimeout(() => {
+            setDisplayedTable(false);
+        }, 200);
     }
 
     useEffect(() => {
@@ -66,18 +105,18 @@ function Form() {
         //este dispatch hace que al NavBar le llegue un false del menú desplegable y de los filtros, evitando que se abran
         dispatch(actionDisplayMenuBar(false));
         dispatch(actionDisplayFilters(false));
+        // con la línea de abajo nos aseguramos de que otras barSearch usados en otros componentes no borren países del estado global
+        // de lo contrario, en el home u otros componentes, no se mostrarían todos los países
+        dispatch(actionRenderCountries(initialCountries));
     }, []);
 
     useEffect(() => {
-        const some = Object.entries(newActivity).map(([key, value]) => {
-            if (value !== '' && value !== 0) return true;
-        });
-        for (let i = 0; i < some.length; i++) {
-            if (!some[i]) {
-                return setFormCompleted(false);
-            }
+        // cada vez que ingresamos un dato al formulario, preguntamos si el estado local newActivity está completo
+        // en caso de estarlo, se habilita el botón submit del formulario (crear actividad)
+        if (!newActivity.paises.length || newActivity.nombre === '' || newActivity.temporada === '' || !newActivity.dificultad || !newActivity.duracion) {
+            setFormCompleted(false);
         }
-        return setFormCompleted(true);
+        else return setFormCompleted(true);
     }, [newActivity]);
 
     return (
@@ -94,22 +133,37 @@ function Form() {
                     <div className={styles.paisNombreInput}>
                         <label className={styles.inputsLabel} htmlFor="">País o países</label>
                         <div className={styles.inputBox}>
-                            <input onChange={handleSearch} onFocus={handleFocus} onBlur={handleBlur} id='paises' type="search" autoComplete='off' placeholder='Puedes agregar mas de un país' />
+                            <input value={valueSearch} onChange={handleSearch} onFocus={handleFocus} onBlur={handleBlur} id='paises' type="search" autoComplete='off' placeholder='Puedes agregar mas de un país' />
                             <div className={styles.inputBoxImgBox}>
-                                <p>0</p>
+                                <p>{newActivity.paises.length}</p>
                                 <img src={flagIcon} alt="" />
-                                <p id={styles.inputBoxImgBoxAfter}>Seleccionados</p>
+                                <p onClick={handleMiniTable} id={styles.inputBoxImgBoxAfter}>Países seleccionados</p>
                                 <div className={styles.seleccionPaisContainer} id={displayedTable ? '' : styles.hidden}>
                                     {renderCountries?.map((country, i) => {
+                                        const name = country.nombre;
                                         return (
-                                            <div key={i} className={styles.countrySelectionRow}>
-                                                <p>{country.nombre}</p>
-                                                <img src={country.imagenBandera} alt="" />
+                                            <div onClick={handleCountrySelect} id={name} key={i} className={styles.countrySelectionRow}>
+                                                <p onClick={handleCountrySelect} id={name}>{name}</p>
+                                                <img src={country.imagenBandera} alt="" onClick={handleCountrySelect} id={name} />
                                             </div>
                                         )
                                     })}
                                 </div>
                             </div>
+                            {displayedSelectedCountries &&
+                                <div className={styles.falseDiv}>
+                                    <div className={styles.selectedCountries}>
+                                        {newActivity.paises?.map((nombre, i) => {
+                                            return (
+                                                <div key={i} className={styles.selectedCountriesRow}>
+                                                    <p>{nombre}</p>
+                                                    <p onClick={deleteCountry} title={nombre} id={styles.deleteSelection}>✕</p>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className={styles.paisNombreInput}>

@@ -1,7 +1,6 @@
 import styles from './Card.module.css';
 import { useState } from 'react';
 import zoomIcon from '../../img/zoomIcon.svg';
-import addSolidIcon from '../../img/bookmark-solid.svg';
 import addRegularIcon from '../../img/bookmark-regular.svg';
 import { useNavigate } from 'react-router-dom';
 import { DETAIL } from '../../utils/pathroutes';
@@ -32,7 +31,7 @@ function Card({ country }) {
                             <img src={zoomIcon} alt="" />
                             <p>Ver detalle</p>
                         </div>
-                        <img className={styles.addIcon} src={addRegularIcon} alt="" />
+                        {/* <img className={styles.addIcon} src={addRegularIcon} alt="" /> */}
                     </div>
                 </div>
             }

@@ -6,8 +6,9 @@ async function newActivity(req, res) {
         const { nombre, dificultad, duracion, temporada, paises } = req.body;
         if(!nombre || !dificultad || !duracion || !temporada || !paises.length) throw Error('Faltan datos');
         const temporadaLowerCase = temporada.toLowerCase();
+        const nombreLowerCase = nombre.toLowerCase();
         const newAct = await Activity.create({
-            nombre,
+            nombre: nombreLowerCase,
             dificultad,
             duracion,
             temporada: temporadaLowerCase

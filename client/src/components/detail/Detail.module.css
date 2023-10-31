@@ -113,6 +113,13 @@
     flex: 1;
 }
 
+.actividadesTuristicas{
+    width: 100%;
+    height: 30px;
+    text-align: left;
+    padding-left: 15px;
+}
+
 .activitiesTableContainer{
     width: 100%;
     height: 100%;
@@ -214,19 +221,12 @@
     overflow: hidden;
 }
 
-@media only screen and (max-width: 600px) {
-    .allValue{
-        justify-content: flex-start;
-        padding-left: 0;
-    }
-}
-
-.actividadValue::after{
+/* .actividadValue::after{
     content: '＋';
     position: absolute;
     right: 0;
     color: var(--light-font-color);
-}
+} */
 
 @media only screen and (max-width: 600px) {
     .actividadValue::after{

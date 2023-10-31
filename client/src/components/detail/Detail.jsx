@@ -61,7 +61,8 @@ function Detail() {
                     </div>
 
                     <div className={styles.activitiesTableView}>
-                        {country.activities.map((activity, index) => {
+                        <p className={styles.actividadesTuristicas}>Actividades turísticas:</p>
+                        {country.activities.length ? country.activities?.map((activity, index) => {
                             return (
                                 <div key={index} className={styles.activitiesTableContainer}>
                                     <div className={styles.params}>
@@ -78,28 +79,13 @@ function Detail() {
                                             <p className={styles.allValue}id={styles.temporadaValue}>{activity.temporada}</p>
                                         </div>
                                     </div>
-                                    {/* <div>
-                                        <p>Actividad:</p>
-                                        <p>{activity.nombre}</p>
-                                    </div>
-                                    <div>
-                                        <p>Dificultad:</p>
-                                        <p>{activity.nombre}</p>
-                                    </div>
-                                    <div>
-                                        <p>Actividad:</p>
-                                        <p>{activity.nombre}</p>
-                                    </div>
-                                    <div>
-                                        <p>Actividad:</p>
-                                        <p>{activity.nombre}</p>
-                                    </div>
-                                    <p>{activity.dificultad}</p>
-                                    <p>{activity.duracion}</p>
-                                    <p>{activity.temporada}</p> */}
                                 </div>
                             )
-                        })}
+                        }) : 
+                        <div>
+                            Este país no registra actividades
+                        </div>
+                        }
                     </div>
                 </div> :
                 <div className={styles.loadingContainer}>

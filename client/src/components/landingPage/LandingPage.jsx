@@ -2,6 +2,7 @@ import styles from './LandingPage.module.css';
 import seaVideo from '../../img/seaVideo.mp4';
 import desertVideo from '../../img/desertVideo.mp4';
 import newYorkVideo from '../../img/newYorkVideo.mp4';
+import spainVideo from '../../img/spainVideo.mp4';
 import { HOME } from '../../utils/pathroutes';
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
@@ -10,7 +11,7 @@ import { NavLink } from 'react-router-dom';
 
 function LandingPage() {
     const dispatch = useDispatch();
-    const videos = [seaVideo, newYorkVideo, desertVideo];
+    const videos = [seaVideo, newYorkVideo, desertVideo, spainVideo];
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
     const videoRef = useRef(null);
 

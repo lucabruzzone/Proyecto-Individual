@@ -9,3 +9,4 @@ export const URL = `http://localhost:${PORT}`;
 export const COUNTRIES = 'countries';
 export const COUNTRY = 'country';
 export const ACTIVITIES_BY_COUNTRY = 'activities';
+export const ACTIVITIES = 'activities';
