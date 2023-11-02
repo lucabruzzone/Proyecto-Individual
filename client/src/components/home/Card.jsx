@@ -1,13 +1,13 @@
 import styles from './Card.module.css';
 import { useState } from 'react';
 import zoomIcon from '../../img/zoomIcon.svg';
-import addRegularIcon from '../../img/bookmark-regular.svg';
+import hikingIcon from '../../img/person-hiking-solid.svg';
 import { useNavigate } from 'react-router-dom';
 import { DETAIL } from '../../utils/pathroutes';
 
 function Card({ country }) {
     const navigate = useNavigate();
-    const { ID, imagenBandera, nombre } = country;
+    const { ID, imagenBandera, nombre, activities } = country;
     const [mouseOverOn, setMouseOverOn] = useState(false);
 
     function handleDetail() {
@@ -31,13 +31,17 @@ function Card({ country }) {
                             <img src={zoomIcon} alt="" />
                             <p>Ver detalle</p>
                         </div>
-                        {/* <img className={styles.addIcon} src={addRegularIcon} alt="" /> */}
                     </div>
                 </div>
             }
             {nombre &&
                 <p className={styles.countryName}>{nombre}</p>
             }
+            {activities && activities.length > 0 ?
+                <div className={styles.numberDown}>
+                    <p>+ {activities.length}</p>
+                    <img src={hikingIcon} alt="" />
+                </div> : null}
         </div>
     );
 }

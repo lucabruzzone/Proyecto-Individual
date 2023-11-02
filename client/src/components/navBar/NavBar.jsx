@@ -64,17 +64,17 @@ function NavBar() {
                 }
                 <div className={styles.listContainer}>
                     <ul>
-                        <NavLink to={HOME} className={styles.navLinkDesktop} id={styles.navLinkDesktopLanding}>
+                        <NavLink to={HOME} className={styles.navLinkDesktop} id={location.pathname === HOME && styles.navLinkDesktopLanding}>
                             <button>Home</button>
                         </NavLink>
                         {location.pathname !== '/' &&
-                            <NavLink to={FORM} className={styles.navLinkDesktop}>
+                            <NavLink to={FORM} className={styles.navLinkDesktop} id={location.pathname === FORM && styles.navLinkDesktopLanding}>
                                 <button>Agregar actividad</button>
                             </NavLink>
                         }
                         {location.pathname !== '/' &&
                             <NavLink className={styles.navLinkDesktop}>
-                                <button onClick={handlerFilters} id={styles.filters} className={globalDisplayFilters ? styles.filters : styles.filters2}>Filtros</button>
+                                <button onClick={handlerFilters} id={globalDisplayFilters ? styles.filtersOn : styles.filters} className={globalDisplayFilters ? styles.filters : styles.filters2}>Filtros</button>
                             </NavLink>
                         }
                     </ul>

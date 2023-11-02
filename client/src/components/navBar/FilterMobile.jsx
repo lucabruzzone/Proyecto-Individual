@@ -10,50 +10,38 @@ function FilterMobile() {
                     <li value="Trekking">Trekking<span>＋</span></li>
                     <li value="Paseo_en_bote">Paseo en bote<span>＋</span></li>
                     <li value="Museo">Museo<span>＋</span></li>
-                    <li value="Cabalgata">Cabalgata<span>＋</span></li>
-                    <li value="Trekking">Trekking<span>＋</span></li>
-                    <li value="Paseo_en_bote">Paseo en bote<span>＋</span></li>
-                    <li value="Museo">Museo<span>＋</span></li>
-                    <li value="Cabalgata">Cabalgata<span>＋</span></li>
-                    <li value="Trekking">Trekking<span>＋</span></li>
-                    <li value="Paseo_en_bote">Paseo en bote<span>＋</span></li>
-                    <li value="Museo">Museo<span>＋</span></li>
-                    <li value="Cabalgata">Cabalgata<span>＋</span></li>
-                    <li value="Trekking">Trekking<span>＋</span></li>
-                    <li value="Paseo_en_bote">Paseo en bote<span>＋</span></li>
-                    <li value="Museo">Museo<span>＋</span></li>
                 </ul>
             </section>
 
             <section>
                 <label className={styles.dificultad} htmlFor="">Dificultad</label>
                 <ul className={styles.listUl} name="Dificultad" id="Dificultad">
-                    <li value="Cabalgata">1 Muy Baja<span>＋</span></li>
-                    <li value="Trekking">2 Baja<span>＋</span></li>
-                    <li value="Paseo_en_bote">3 Media<span>＋</span></li>
-                    <li value="Museo">4 Media Alta<span>＋</span></li>
-                    <li value="Museo">5 Alta<span>＋</span></li>
+                    <li value="1">1 Muy Baja<span>＋</span></li>
+                    <li value="2">2 Baja<span>＋</span></li>
+                    <li value="3">3 Media<span>＋</span></li>
+                    <li value="4">4 Media Alta<span>＋</span></li>
+                    <li value="5">5 Alta<span>＋</span></li>
                 </ul>
             </section>
 
             <section>
                 <label className={styles.temporada} htmlFor="">Temporada</label>
                 <ul className={styles.listUl} name="Temporada" id="Temporada">
-                    <li value="Cabalgata">Verano<span>＋</span></li>
-                    <li value="Trekking">Otoño<span>＋</span></li>
-                    <li value="Paseo_en_bote">Invierno<span>＋</span></li>
-                    <li value="Museo">Primavera<span>＋</span></li>
+                    <li value="Verano">Verano<span>＋</span></li>
+                    <li value="Otoño">Otoño<span>＋</span></li>
+                    <li value="Invierno">Invierno<span>＋</span></li>
+                    <li value="Primavera">Primavera<span>＋</span></li>
                 </ul>
             </section>
 
             <section>
                 <label className={styles.continente} htmlFor="">Continente</label>
                 <ul className={styles.listUl} name="Continente" id="Continente">
-                    <li value="Cabalgata">América<span>＋</span></li>
-                    <li value="Trekking">Europa<span>＋</span></li>
-                    <li value="Paseo_en_bote">Asia<span>＋</span></li>
-                    <li value="Museo">Africa<span>＋</span></li>
-                    <li value="Museo">Oceanía<span>＋</span></li>
+                    <li value="Americas">América<span>＋</span></li>
+                    <li value="Europa">Europa<span>＋</span></li>
+                    <li value="Asia">Asia<span>＋</span></li>
+                    <li value="Africa">Africa<span>＋</span></li>
+                    <li value="Oceanía">Oceanía<span>＋</span></li>
                 </ul>
             </section>
         </div>

@@ -37,7 +37,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--light-bgcolor);
+    background-image: linear-gradient(to bottom,
+            rgba(222, 237, 255, 0.95),
+            #f1f3f5), url('../../img/countries.png');
+    background-position: top;
+    background-size: cover;
     /* border-bottom: 1px solid var(--off-border-color); */
     padding: var(--view-side-padding);
 }
@@ -81,8 +85,10 @@
     margin: 0 var(--main-buttons-gap);
     display: flex;
     align-items: center;
-    border: 1px solid var(--main-border-color);
+    border: 2px solid var(--main-border-color);
+    box-shadow: var(--little-box-shadow);
     border-radius: var(--high-border-radius);
+    background-color: var(--light-bgcolor);
     overflow: hidden;
 }
 
@@ -115,7 +121,7 @@
     cursor: pointer;
 }
 
-@media only screen and (min-width: 670px) {
+@media only screen and (min-width: 700px) {
     .menuIcon {
         display: none;
     }
@@ -137,7 +143,7 @@
     max-width: 480px;
 }
 
-@media only screen and (max-width: 670px) {
+@media only screen and (max-width: 700px) {
     .listContainer {
         display: none;
     }
@@ -160,17 +166,17 @@
 }
 
 #navLinkDesktopLanding button{
-    border: 1px solid var(--main-border-color);
-    color: var(--hover-font-color);
-}
-#navLinkDesktopLanding button:hover{
     color: var(--light-font-color);
     background-color: var(--main-border-color);
 }
+/* #navLinkDesktopLanding button:hover{
+    color: var(--light-font-color);
+    background-color: var(--main-border-color);
+} */
 
 .listContainer ul button {
     cursor: pointer;
-    border: 1px solid var(--off-border-color);
+    border: 2px solid transparent;
     border-radius: var(--high-border-radius);
     background: transparent;
     color: var(--gray-font-color);
@@ -178,17 +184,24 @@
     font-size: var(--main-font-size);
     height: 100%;
     width: 100%;
+    min-width: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .listContainer ul button:hover {
-    border: 1px solid var(--hover-font-color);
+    border: 2px solid var(--hover-font-color);
     color: var(--hover-font-color);
 }
 
 #filters {
+    gap: 30px;
+}
+
+#filtersOn {
+    border: 1px solid var(--hover-font-color);
+    color: var(--hover-font-color);
     gap: 30px;
 }
 
@@ -215,11 +228,12 @@
 }
 
 .filterDesktopDisplayed{
-    height: 340px;
+    /* height: 340px; */
+    height: 280px;
     transition: all .3s;
 }
 
-@media only screen and (max-width: 670px) {
+@media only screen and (max-width: 700px) {
     #filterDesktop {
         display: none;
     }

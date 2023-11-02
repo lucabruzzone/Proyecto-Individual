@@ -29,6 +29,7 @@
 }
 
 .mainView {
+    position: relative;
     width: 100%;
     height: 100%;
 }
@@ -43,9 +44,33 @@
     transition: all .2s;
 }
 
+.numberDown{
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: auto;
+    height: 16px;
+    padding: 0 8px;
+    border: 1px solid var(--main-border-color);
+    border-radius: var(--main-border-radius);
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: var(--main-font-weight);
+    color: var(--main-border-color);
+    /* opacity: var(--off-opacity); */
+}
+
+.numberDown img{
+    height: 20px;
+    width: 8px;
+    margin-left: 5px;
+}
+
 .imgContainer:hover {
     /* box-shadow: var(--high-box-shadow); */
     box-shadow: none;
+    scale: 1.05;
     transition: all .2s;
 }
 

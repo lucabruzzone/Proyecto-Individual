@@ -23,7 +23,7 @@ function App() {
       if (data.length) {
         dispatch(actionInitialCountries(data));
       }
-      else throw Error('La carga de los países no fue exitosa')
+      else throw Error('La carga de los países no fue exitosa');
     } catch (error) {
       console(error.message);
     }
@@ -35,7 +35,7 @@ function App() {
 
   return (
     <div className='App' id={styles.mainView}>
-      <NavBar />
+      {location.pathname !== '/' && <NavBar />}
       <Routes>
         <Route path='/' element={<LandingPage />} />
         <Route path={HOME} element={<Home />} />

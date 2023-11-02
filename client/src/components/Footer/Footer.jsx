@@ -8,7 +8,7 @@ function Footer() {
             <div className={styles.bigContainer}>
                 <div className={styles.textos}>
                     <h1>CountriesApp</h1>
-                    <p className={styles.comentario}>// App en desarrollo</p>
+                    <p className={styles.comentario}>// Proyecto Individual en <span>Henry</span></p>
                     <p className={styles.parrafo}>Rápido conversor de formato para incluir o eliminar comillas dobles de forma inmdiata, sin tener que hacerlo manualmente.</p>
                     <ul>
                         <li>Agiliza las pruebas de tu API</li>

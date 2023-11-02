@@ -8,7 +8,7 @@ import { URL, ACTIVITIES_BY_COUNTRY } from '../../utils/pathroutes';
 import Loading from '../loading/Loading';
 
 function Detail() {
-    const [country, setCountry] = useState();
+    const [country, setCountry] = useState(null);
     const { id } = useParams();
     const dispatch = useDispatch();
 
@@ -23,6 +23,7 @@ function Detail() {
                 capital = capital.replace(/[{}]/g, ''); // limpiamos el string ya que puede venir con símbolos que no queremos
                 obj = { ...country, capital, activities };
                 setCountry(obj);
+                console.log({ ...country, capital, activities });
             }
             else throw Error('Error al cargar los datos del país');
         } catch (error) {
@@ -62,29 +63,30 @@ function Detail() {
 
                     <div className={styles.activitiesTableView}>
                         <p className={styles.actividadesTuristicas}>Actividades turísticas:</p>
-                        {country.activities.length ? country.activities?.map((activity, index) => {
-                            return (
-                                <div key={index} className={styles.activitiesTableContainer}>
-                                    <div className={styles.params}>
-                                        <p className={styles.actividadParam}>Actividad</p>
-                                        <p className={styles.allParams}>Dificultad</p>
-                                        <p className={styles.allParams}>duracion</p>
-                                        <p className={styles.allParams}>temporada</p>
-                                    </div>
-                                    <div className={styles.valuesRowsTable}>
-                                        <div className={styles.eachRow}>
-                                            <p className={styles.actividadValue}>{activity.nombre}</p>
-                                            <p className={styles.allValue}>{activity.dificultad}</p>
-                                            <p className={styles.allValue}>{activity.duracion}</p>
-                                            <p className={styles.allValue}id={styles.temporadaValue}>{activity.temporada}</p>
-                                        </div>
-                                    </div>
+                        {country.activities.length ?
+                            <div className={styles.activitiesTableContainer}>
+                                <div className={styles.params}>
+                                    <p className={styles.actividadParam}>Actividad</p>
+                                    <p className={styles.allParams}>Dificultad</p>
+                                    <p className={styles.allParams}>duracion</p>
+                                    <p className={styles.allParams}>temporada</p>
                                 </div>
-                            )
-                        }) : 
-                        <div>
-                            Este país no registra actividades
-                        </div>
+                                <div className={styles.valuesRowsTable}>
+                                    {country.activities?.map((activity, i) => {
+                                        return (
+                                            <div key={i} className={styles.eachRow}>
+                                                <p className={styles.actividadValue}>{activity.nombre}</p>
+                                                <p className={styles.allValue}>{activity.dificultad}</p>
+                                                <p className={styles.allValue}>{activity.duracion}</p>
+                                                <p className={styles.allValue} id={styles.temporadaValue}>{activity.temporada}</p>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div> :
+                            <div>
+                                Este país no registra actividades
+                            </div>
                         }
                     </div>
                 </div> :

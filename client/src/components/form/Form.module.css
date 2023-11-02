@@ -30,7 +30,7 @@
     font-weight: 400;
 }
 
-@media only screen and (max-width: 670px) {
+@media only screen and (max-width: 700px) {
     .mainContainer p {
         text-align: left;
     }
@@ -42,7 +42,7 @@
     right: 10px;
     display: flex;
     align-items: center;
-    border: 1px solid var(--main-border-color);
+    border: 2px solid transparent;
     border-radius: 1000px;
     background-color: inherit;
     height: 30px;
@@ -106,7 +106,7 @@
     width: 65%;
     min-width: 180px;
     padding: 0 10px;
-    border: 1px solid var(--main-border-color);
+    border: 2px solid var(--main-border-color);
     border-radius: 50px;
     font-weight: var(--main-font-weight);
 }
@@ -156,7 +156,7 @@
     top: 0;
     left: 0;
     background-color: var(--gray-bgcolor);
-    border: 1px solid var(--gray-bgcolor);
+    border: 2px solid var(--gray-bgcolor);
     border-radius: var(--main-border-radius);
     box-shadow: var(--main-box-shadow);
     width: 100%;
@@ -201,8 +201,8 @@
     z-index: 14;
     position: absolute;
     top: 0;
-    left: 0;
-    background-color: white;
+    left: 25px;
+    background-color: var(--gray-bgcolor);
     border-radius: var(--main-border-radius);
     box-shadow: var(--main-box-shadow);
     width: 160px;
@@ -234,14 +234,12 @@
 }
 
 #deleteSelection{
-    border: 1px solid white;
-    padding: 2px;
-    color: white;
+    font-size: 15px;
+    color: var(--gray-bgcolor);
     cursor: pointer;
 }
 
 #deleteSelection:hover{
-    border: 1px solid black;
     color: black;
 }
 
@@ -281,8 +279,8 @@
 }
 
 .numberBox p:hover {
-    background-color: var(--hover-border-color);
-    color: black;
+    background-color: var(--main-border-color);
+    color: white;
 }
 
 .difOn {
@@ -341,12 +339,13 @@
     padding: 2px 10px;
     font-size: var(--main-font-size);
     font-weight: var(--main-font-weight);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.364);
     cursor: pointer;
 }
 
 .temporadaBox p:hover {
-    background-color: var(--hover-border-color);
-    color: black;
+    background-color: var(--main-border-color);
+    color: white;
 }
 
 .tempOn {

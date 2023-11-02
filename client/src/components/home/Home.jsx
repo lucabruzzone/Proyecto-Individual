@@ -3,17 +3,32 @@ import Card from './Card';
 import Paginado from './Paginado';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { actionDisplayMenuBar, actionDisplayFilters, actionRenderCountries } from '../../redux/actions';
+import { 
+    actionDisplayMenuBar, 
+    actionDisplayFilters, 
+    actionRenderCountries,
+    actionRemoveAllFilters
+} from '../../redux/actions';
 
 function Home() {
     const initialCountries = useSelector(state => state.initialCountries);
     const renderCountries = useSelector(state => state.renderCountries);
+    const activitiesFilter = useSelector(state => state.activitiesFilter);
+    const difficultyFilter = useSelector(state => state.difficultyFilter);
+    const seasonFilter = useSelector(state => state.seasonFilter);
+    const continentsFilter = useSelector(state => state.continentsFilter);
+    const [numberOfFiltersSelected, setNumberOfFiltersSelected] = useState(0);
     const [page, setPage] = useState(1);
     const [eachPage, setEachPage] = useState(24);
     let totalPages = Math.ceil(renderCountries.length / eachPage);
     let initialSlice = (page - 1) * eachPage;
     let lastSlice = ((page - 1) * eachPage) + eachPage;
     const dispatch = useDispatch();
+
+    function removeFilters() {
+        dispatch(actionRemoveAllFilters());
+        dispatch(actionRenderCountries(initialCountries));
+    }
 
     useEffect(() => {
         //acá nos aseguramos de que el menú desplegable y los filtros no se abran indeseablemente al renderizar este componente
@@ -25,13 +40,17 @@ function Home() {
         dispatch(actionRenderCountries(initialCountries));
     }, []);
 
+    useEffect(() => {
+        const suma = activitiesFilter.length + difficultyFilter.length + seasonFilter.length + continentsFilter.length;
+        setNumberOfFiltersSelected(suma);
+    }, [activitiesFilter, difficultyFilter, seasonFilter, continentsFilter]);
+
     return (
         <div className={styles.mainView}>
             <section className={styles.filterSelectionsView}>
                 <div className={styles.filterSelectionsContainer}>
-                    <p>0 filtros:</p>
-                    <div className={styles.addedFiltersContainer}>
-                    </div>
+                    <p>Filtros aplicados: <span>{numberOfFiltersSelected}</span></p>
+                    <button onClick={removeFilters}>Borrar filtros</button>
                 </div>
             </section>
             <p id={styles.seleccionaUnPais}>Selecciona un país:</p>
