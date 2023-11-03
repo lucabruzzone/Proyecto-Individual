@@ -85,7 +85,7 @@
 #activitiesOnly{
     position: absolute;
     bottom: 10px;
-    right: 10px;
+    left: 15px;
     height: auto;
     width: 100%;
     max-width: 270px;
