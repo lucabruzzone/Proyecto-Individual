@@ -36,17 +36,16 @@
     font-weight: 500;
 }
 
+.parrafo a{
+    color: rgb(186, 171, 0);
+}
+
 .textos ol{
     padding-left: 0;
     text-align: left;
     width: max-content;
     margin: 40px auto 20px auto;
 }
-
-/* .textos li::before{
-    content: '-';
-    margin-right: 20px;
-} */
 
 .textos li{
     list-style-type: decimal;
