@@ -3,11 +3,9 @@ const { Sequelize } = require("sequelize");
 
 const fs = require('fs');
 const path = require('path');
-const {
-  DB_USER, DB_PASSWORD, DB_HOST,
-} = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/countries`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
   logging: false, 
   native: false, 
 });
@@ -39,3 +37,22 @@ module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
 };
+
+// lo de abajo es la conexión de la base de datos Postgres "countries" en el localhost:
+
+/* DB_USER=postgres
+DB_PASSWORD=admin
+DB_HOST=localhost
+DB_NAME=countries
+API_KEY=1234
+`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}` */
+
+
+
+// script de desarrollo para levantar nuestra api y la api externa:
+
+/* "scripts": {
+  "server": "nodemon index.js",
+  "api": "echo 'Local API listening on PORT 5000' & json-server --watch api/db.json -p 5000 -q",
+  "start": "concurrently \"npm run server\" \"npm run api\""
+}, */

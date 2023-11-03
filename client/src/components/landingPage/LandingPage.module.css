@@ -24,7 +24,7 @@
 .mainView {
     position: relative;
     width: 100%;
-    /* height: 800px; */
+    height: 800px;
     min-height: 100vh;
     background-image: linear-gradient(to bottom,
             rgba(104, 167, 250, 0.546),

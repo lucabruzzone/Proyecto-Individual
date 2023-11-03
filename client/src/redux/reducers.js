@@ -1,5 +1,6 @@
-import deleteDuplicates from '../utils/deleteDuplicates';
+import { deleteDuplicates } from '../utils/deleteDuplicates';
 import activitiesOnly from '../utils/activitiesOnly';
+import { deleteDuplicatesActivities } from '../utils/deleteDuplicates';
 import {
     SET_PAGE,
     SET_DISPLAY_MENU_BAR,
@@ -47,7 +48,7 @@ const rootReducer = (state = initialState, action) => {
             return { ...state, initialCountries: action.payload, renderCountries: action.payload, saveInitialCountries: action.payload };
 
         case ACTIVITIES_AVAILABLES: // estado que muestra la variedad de actividades que existen en total
-            return { ...state, activitiesAvailable: action.payload };
+            return { ...state, activitiesAvailable: deleteDuplicatesActivities(action.payload) };
 
         case FILTER_ACTIVITIES: // actividades seleccionadas por el usuario en la sección filtros
             if (!state.activitiesFilter.includes(action.payload)) {
@@ -76,8 +77,8 @@ const rootReducer = (state = initialState, action) => {
 
 
 
-            // LOS CASES DEBAJO DE ESTA LÍNEA SON EL RENDERIZADO RESULTANTE LUEGO DE EJECUTAR LOS FILTROS:
-            // en todos los casos, no se nos puede olvidar setear el estado global "pages" en "1" para que siempre se renderizen los países desde la página 1.
+        // LOS CASES DEBAJO DE ESTA LÍNEA SON EL RENDERIZADO RESULTANTE LUEGO DE EJECUTAR LOS FILTROS:
+        // en todos los casos, no se nos puede olvidar setear el estado global "pages" en "1" para que siempre se renderizen los países desde la página 1.
 
 
         // el siguiente case renderiza los países de acuerdo a la suma de filtros que el usuario selecciona

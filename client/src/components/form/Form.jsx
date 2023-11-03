@@ -1,14 +1,15 @@
 import styles from './Form.module.css';
 import axios from 'axios';
 import flagIcon from '../../img/flag-solid.svg';
-import { HOME, COUNTRY, URL, ACTIVITIES } from '../../utils/pathroutes';
+import { HOME, COUNTRY, URL, ACTIVITIES, SUCCESSFORM } from '../../utils/pathroutes';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { actionDisplayMenuBar, actionDisplayFilters, actionRenderCountries } from '../../redux/actions';
 
 function Form() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const initialCountries = useSelector(state => state.initialCountries);
     const renderCountries = useSelector(state => state.renderCountries);
     const [displayedTable, setDisplayedTable] = useState(false);
@@ -84,6 +85,7 @@ function Form() {
                 if (data) alert('Actividad creada con éxito');
             }
             e.preventDefault();
+            navigate(SUCCESSFORM);
         } catch (error) {
             console.log(error.message);
         }

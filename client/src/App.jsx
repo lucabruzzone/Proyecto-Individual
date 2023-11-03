@@ -3,7 +3,7 @@ import styles from './App.module.css';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { HOME, FORM, DETAIL, URL, COUNTRIES } from './utils/pathroutes';
+import { HOME, FORM, DETAIL, URL, COUNTRIES, SUCCESSFORM } from './utils/pathroutes';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import LandingPage from './components/landingPage/LandingPage';
 import Home from './components/home/Home';
@@ -11,6 +11,7 @@ import Form from './components/form/Form';
 import Detail from './components/detail/Detail';
 import NavBar from './components/navBar/NavBar';
 import Footer from './components/Footer/Footer';
+import SuccessForm from './components/form/SuccessForm';
 import { actionInitialCountries } from './redux/actions';
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
       }
       else throw Error('La carga de los países no fue exitosa');
     } catch (error) {
-      console(error.message);
+      console.log(error.message);
     }
   }
 
@@ -41,8 +42,9 @@ function App() {
         <Route path={HOME} element={<Home />} />
         <Route path={FORM} element={<Form />} />
         <Route path={`${DETAIL}/:id`} element={<Detail />} />
+        <Route path={SUCCESSFORM} element={<SuccessForm />} />
       </Routes>
-      {location.pathname !== '/' && <Footer />}
+      {(location.pathname !== '/' && location.pathname !== SUCCESSFORM) && <Footer />}
     </div>
   )
 }

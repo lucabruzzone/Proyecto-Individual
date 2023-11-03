@@ -1,6 +1,7 @@
 import styles from './Home.module.css';
 import Card from './Card';
 import Paginado from './Paginado';
+import Loading from '../loading/Loading';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -66,27 +67,32 @@ function Home() {
                 <Paginado page={page} totalPages={totalPages} />
             </section>
             <p id={styles.seleccionaUnPais}>Selecciona un país:</p>
-            <section className={styles.cardsView}>
-                {renderCountries.length ?
-                    <div className={styles.cardsContainer}>
-                        {renderCountries.slice(initialSlice, lastSlice).map((country, index) => {
-                            return (
-                                <div key={index} className={styles.cardComponentBox}>
-                                    <Card country={country} />
-                                </div>
-                            )
-                        })}
-                    </div> :
-                    <div className={styles.cardsContainer}>
-                        <div className={styles.cardComponentBox}></div>
-                        <div className={styles.cardComponentBox}></div>
-                        <div className={styles.cardComponentBox}></div>
-                        <div className={styles.cardComponentBox}></div>
-                        <div className={styles.cardComponentBox}></div>
-                        <div className={styles.cardComponentBox}></div>
-                    </div>
-                }
-            </section>
+            {renderCountries.length ?
+                <section className={styles.cardsView}>
+                    {renderCountries.length ?
+                        <div className={styles.cardsContainer}>
+                            {renderCountries.length && renderCountries.slice(initialSlice, lastSlice).map((country, index) => {
+                                return (
+                                    <div key={index} className={styles.cardComponentBox}>
+                                        <Card country={country} />
+                                    </div>
+                                )
+                            })}
+                        </div> :
+                        <div className={styles.cardsContainer}>
+                            <div className={styles.cardComponentBox}></div>
+                            <div className={styles.cardComponentBox}></div>
+                            <div className={styles.cardComponentBox}></div>
+                            <div className={styles.cardComponentBox}></div>
+                            <div className={styles.cardComponentBox}></div>
+                            <div className={styles.cardComponentBox}></div>
+                        </div>
+                    }
+                </section> :
+                <div className={styles.loadingContainer}>
+                    <Loading />
+                </div>
+            }
             <section className={styles.paginado2}>
                 <Paginado page={page} totalPages={totalPages} />
             </section>

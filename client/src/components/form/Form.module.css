@@ -235,7 +235,7 @@
 
 #deleteSelection{
     font-size: 15px;
-    color: var(--gray-bgcolor);
+    color: var(--main-border-color);
     cursor: pointer;
 }
 

@@ -1,7 +1,7 @@
 // recordemos que los países en esta aplicación, son objetos javascript, por lo tanto, iterar los países para
 // buscar duplicados, tendremos que hacerlo mediante su versión JSON.
 
-function deleteDuplicates(arr) {
+export function deleteDuplicates(arr) {
     const elementosUnicos = new Set();
     const arraySinDuplicados = [];
 
@@ -16,4 +16,13 @@ function deleteDuplicates(arr) {
     return arraySinDuplicados; //finalmente devolvemos el array que contiene los objetos sin duplicarse.
 }
 
-export default deleteDuplicates;
+export function deleteDuplicatesActivities(array) { // esta función es similar a la de arriba, solo que acá podemos buscar coincidencias de propiedades en específico de objetos dentro de un array
+    const uniqueArray = array.reduce((accumulator, currentObject) => {
+        const exists = accumulator.some((obj) => obj.nombre === currentObject.nombre);
+        if (!exists) {
+            accumulator.push(currentObject);
+        }
+        return accumulator;
+    }, []);
+    return uniqueArray
+}

@@ -64,7 +64,7 @@ function FilterDesktop() {
             <section id={styles.eachSection} className={activitiesFilter.length ? styles.borderSelected : styles.borderHidden}>
                 <label className={styles.actividad} htmlFor="">Actividad</label>
                 <ul className={styles.listUl} name="actividad" id="actividad">
-                    {activitiesAvailable?.map((activity, i) => {
+                    {activitiesAvailable.length && activitiesAvailable.map((activity, i) => {
                         return <li key={i} onClick={handleSelect} title={activity.nombre} id='Actividad' className={activitiesFilter.includes(activity.nombre) && styles.selectionOn}>{activity.nombre}</li>
                     })}
                 </ul>
