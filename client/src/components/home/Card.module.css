@@ -38,7 +38,9 @@
     width: 100%;
     height: 100%;
     position: relative;
+    border-radius: 25px;
     /* border-radius: var(--main-border-radius); */
+    /* border: 2px solid var(--main-border-color); */
     box-shadow: var(--medium-box-shadow);
     overflow: hidden;
     transition: all .2s;
@@ -46,24 +48,27 @@
 
 .numberDown{
     position: absolute;
-    bottom: -20px;
-    left: 0;
+    bottom: 8px;
+    left: 16px;
     width: auto;
-    height: 16px;
-    padding: 0 8px;
-    border: 1px solid var(--main-border-color);
-    border-radius: var(--main-border-radius);
+    height: 18px;
+    padding: 0 4px;
     display: flex;
     align-items: center;
-    font-size: 12px;
+    border-radius: var(--main-border-radius);
+    background-color: white;
+    font-size: 14px;
     font-weight: var(--main-font-weight);
     color: var(--main-border-color);
-    /* opacity: var(--off-opacity); */
+}
+
+#numberDownHidden{
+    display: none;
 }
 
 .numberDown img{
     height: 20px;
-    width: 8px;
+    width: 10px;
     margin-left: 5px;
 }
 
@@ -100,7 +105,7 @@
 }
 
 .countryName {
-    font-size: var(--main-font-size);
+    font-size: 20px;
     font-weight: var(--main-font-weight);
     /* color: var(--gray-font-color); */
 }

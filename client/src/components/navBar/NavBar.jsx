@@ -1,6 +1,5 @@
 import styles from './NavBar.module.css';
 import FilterDesktop from './FilterDesktop';
-import FilterMobile from './FilterMobile';
 import countriesIcon from '../../img/mountain-sun-solid.svg';
 import menuIcon from '../../img/menuIcon.svg';
 import searchIcon from '../../img/searchIcon.svg';
@@ -35,6 +34,7 @@ function NavBar() {
     }
 
     function handleMediaMenuBar() {
+        console.log('tukis');
         // abrimos o cerramos el menu desplegable y despachamos al estado global true si se desplegó y false si no
         // si el estado global es false, significa que se esconderá el menu desplegable
         dispatch(actionDisplayMenuBar(!globalDisplayMenuBar));
@@ -90,25 +90,28 @@ function NavBar() {
             {location.pathname !== '/' &&
                 <div id={styles.menuBarContainer} className={globalDisplayMenuBar ? styles.menuDisplayed : styles.menuHidden}>
                     <ul className={styles.firstUl}>
-                        <li className={styles.li}>
+                        <li className={styles.li} id={location.pathname === HOME ? styles.navLinkMobileLanding : ''}>
                             <NavLink to={HOME} className={styles.navLinkMedia}>
-                                <p id={HOME} className={styles.home}>Home</p>
+                                <button id={HOME} className={styles.home}>Home</button>
                             </NavLink>
                         </li>
 
-                        <li className={styles.li}>
+                        <li className={styles.li} id={location.pathname === FORM && styles.navLinkMobileLanding}>
                             <NavLink to={FORM} className={styles.navLinkMedia}>
-                                <p id={FORM} className={styles.actividades}>Agrega una actividad</p>
+                                <button id={FORM} className={styles.actividades}>Agrega una actividad</button>
                             </NavLink>
                         </li>
 
                         <li className={styles.li} onClick={handlerFilters}>
                             <NavLink className={styles.navLinkMedia}>
-                                <p id='filtros' className={styles.filtros}>Filtros</p>
+                                <button className={styles.filtros}>Filtros</button>
                             </NavLink>
                         </li>
-                        <div id={styles.filterMobile} className={globalDisplayFilters ? '' : styles.filterMobileHidden}>
+                        {/* <div id={styles.filterMobile} className={globalDisplayFilters ? '' : styles.filterMobileHidden}>
                             <FilterMobile />
+                        </div> */}
+                        <div id={styles.filterMobile} className={globalDisplayFilters ? styles.filterMobileDisplayed : styles.filterMobileHidden}>
+                            <FilterDesktop />
                         </div>
                     </ul>
                 </div>

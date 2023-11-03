@@ -37,9 +37,9 @@ function Card({ country }) {
             {nombre &&
                 <p className={styles.countryName}>{nombre}</p>
             }
-            {activities && activities.length > 0 ?
-                <div className={styles.numberDown}>
-                    <p>+ {activities.length}</p>
+            {activities?.length ?
+                <div className={styles.numberDown} id={mouseOverOn && styles.numberDownHidden}>
+                    <p>{activities.length}＋</p>
                     <img src={hikingIcon} alt="" />
                 </div> : null}
         </div>

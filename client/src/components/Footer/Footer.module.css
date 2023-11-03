@@ -17,15 +17,18 @@
 }
 
 .comentario{
-    color: rgb(0, 71, 0);
+    color: var(--main-border-color);
+    font-weight: var(--main-font-weight);
     margin-bottom: 30px;
-    font-weight: 300;
 }
 
-.textos span{
-    color: rgb(244, 244, 0);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.575);
-    font-weight: 600;
+.textos a{
+    color: rgb(186, 171, 0);
+    text-decoration: none;
+}
+
+.textos a:hover{
+    text-decoration: underline;
 }
 
 .parrafo{
@@ -33,27 +36,21 @@
     font-weight: 500;
 }
 
-.textos ul{
-    position: relative;
-    list-style: none;
+.textos ol{
     padding-left: 0;
     text-align: left;
     width: max-content;
     margin: 40px auto 20px auto;
 }
 
-.textos li::before{
+/* .textos li::before{
     content: '-';
     margin-right: 20px;
-}
+} */
 
 .textos li{
+    list-style-type: decimal;
     margin: 4px 0;
-}
-
-#masFunc{
-    margin-top: 10px;
-    font-style: italic;
 }
 
 .contacto{
@@ -67,7 +64,7 @@
 
 .contacto a{
     text-decoration: none;
-    color: black;
+    color: rgb(0, 0, 0);
 }
 
 .contacto a:hover{

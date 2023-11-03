@@ -3,22 +3,24 @@ import Card from './Card';
 import Paginado from './Paginado';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { 
-    actionDisplayMenuBar, 
-    actionDisplayFilters, 
+import {
+    actionDisplayMenuBar,
+    actionDisplayFilters,
     actionRenderCountries,
-    actionRemoveAllFilters
+    actionRemoveAllFilters,
+    actionFilterOnlyActivities
 } from '../../redux/actions';
 
 function Home() {
+    const onlyCountriesWActivities = useSelector(state => state.onlyCountriesWActivities);
     const initialCountries = useSelector(state => state.initialCountries);
     const renderCountries = useSelector(state => state.renderCountries);
     const activitiesFilter = useSelector(state => state.activitiesFilter);
     const difficultyFilter = useSelector(state => state.difficultyFilter);
     const seasonFilter = useSelector(state => state.seasonFilter);
     const continentsFilter = useSelector(state => state.continentsFilter);
+    const page = useSelector(state => state.page);
     const [numberOfFiltersSelected, setNumberOfFiltersSelected] = useState(0);
-    const [page, setPage] = useState(1);
     const [eachPage, setEachPage] = useState(24);
     let totalPages = Math.ceil(renderCountries.length / eachPage);
     let initialSlice = (page - 1) * eachPage;
@@ -27,7 +29,10 @@ function Home() {
 
     function removeFilters() {
         dispatch(actionRemoveAllFilters());
-        dispatch(actionRenderCountries(initialCountries));
+    }
+
+    function filterCountriesWActivities() {
+        dispatch(actionFilterOnlyActivities(initialCountries));
     }
 
     useEffect(() => {
@@ -51,7 +56,14 @@ function Home() {
                 <div className={styles.filterSelectionsContainer}>
                     <p>Filtros aplicados: <span>{numberOfFiltersSelected}</span></p>
                     <button onClick={removeFilters}>Borrar filtros</button>
+                    <div id={styles.activitiesOnly}>
+                        <p onClick={onlyCountriesWActivities && filterCountriesWActivities} id={onlyCountriesWActivities ? styles.activitiesOnlyOffP : styles.activitiesOnlyOnP}>Todos los países</p>
+                        <p className={styles.activitiesOnlyDown} onClick={!onlyCountriesWActivities && filterCountriesWActivities} id={onlyCountriesWActivities ? styles.activitiesOnlyOnP : styles.activitiesOnlyOffP}>Solo países con actividades</p>
+                    </div>
                 </div>
+            </section>
+            <section className={styles.paginado1}>
+                <Paginado page={page} totalPages={totalPages} />
             </section>
             <p id={styles.seleccionaUnPais}>Selecciona un país:</p>
             <section className={styles.cardsView}>
@@ -75,8 +87,8 @@ function Home() {
                     </div>
                 }
             </section>
-            <section className={styles.paginado}>
-                <Paginado page={page} setPage={setPage} totalPages={totalPages} />
+            <section className={styles.paginado2}>
+                <Paginado page={page} totalPages={totalPages} />
             </section>
         </div>
     );

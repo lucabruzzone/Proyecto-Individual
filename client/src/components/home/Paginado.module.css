@@ -42,6 +42,7 @@
 
 .pagesSubBox input{
     width: 30px;
+    height: 70%;
     text-align: center;
     border: 1px solid var(--main-border-color);
     border-radius: 5px;

@@ -1,5 +1,7 @@
 import deleteDuplicates from '../utils/deleteDuplicates';
+import activitiesOnly from '../utils/activitiesOnly';
 import {
+    SET_PAGE,
     SET_DISPLAY_MENU_BAR,
     SET_DISPLAY_FILTERS,
     INITIAL_COUNTRIES,
@@ -9,12 +11,16 @@ import {
     FILTER_DIFFICULTY,
     FILTER_SEASON,
     FILTER_CONTINENTS,
-    REMOVE_ALL_FILTERS
+    REMOVE_ALL_FILTERS,
+    FILTER_ONLY_COUNTRIES_WITH_ACTIVITIES
 } from '../utils/actionTypes';
 
 const initialState = {
+    page: 1,
     displayMenuBar: false,
     displayFilters: false,
+    onlyCountriesWActivities: false,
+    saveInitialCountries: [], // guarda los países iniciales para volver a mostrarlos una vez que se cierr el filtro mas estricto de todos (Mostrar solo países con actividades).
     renderCountries: [],
     initialCountries: [],
     activitiesAvailable: [],
@@ -28,6 +34,9 @@ const rootReducer = (state = initialState, action) => {
     let newArray = [];
 
     switch (action.type) {
+        case SET_PAGE: // seteamos la página actual del paginado
+            return { ...state, page: action.payload };
+
         case SET_DISPLAY_MENU_BAR: // para avisarnos si se desplagó la barra menú mobile
             return { ...state, displayMenuBar: action.payload };
 
@@ -35,7 +44,7 @@ const rootReducer = (state = initialState, action) => {
             return { ...state, displayFilters: action.payload };
 
         case INITIAL_COUNTRIES: // carga todos los países al iniciar la app
-            return { ...state, initialCountries: action.payload, renderCountries: action.payload };
+            return { ...state, initialCountries: action.payload, renderCountries: action.payload, saveInitialCountries: action.payload };
 
         case ACTIVITIES_AVAILABLES: // estado que muestra la variedad de actividades que existen en total
             return { ...state, activitiesAvailable: action.payload };
@@ -64,10 +73,11 @@ const rootReducer = (state = initialState, action) => {
             }
             return { ...state, continentsFilter: state.continentsFilter.filter(continent => continent !== action.payload) };
 
-        case REMOVE_ALL_FILTERS: // remueve todos los filtros seleccionados
-            return { ...state, activitiesFilter: [], difficultyFilter: [], seasonFilter: [], continentsFilter: [] };
 
 
+
+            // LOS CASES DEBAJO DE ESTA LÍNEA SON EL RENDERIZADO RESULTANTE LUEGO DE EJECUTAR LOS FILTROS:
+            // en todos los casos, no se nos puede olvidar setear el estado global "pages" en "1" para que siempre se renderizen los países desde la página 1.
 
 
         // el siguiente case renderiza los países de acuerdo a la suma de filtros que el usuario selecciona
@@ -93,7 +103,7 @@ const rootReducer = (state = initialState, action) => {
                         if (booleanValue) newArray.push(country);
                     }
                 }
-    
+
                 // luego hace lo mismo pero con los filtros de dificultad de las actividades turísticas
                 if (state.difficultyFilter.length) {
                     let actionPayload = action.payload;
@@ -108,7 +118,7 @@ const rootReducer = (state = initialState, action) => {
                         if (booleanValue) newArray.push(country);
                     }
                 }
-    
+
                 // luego exactamente lo mismo pero con los filtros de las temporadas (verano, otoño..etc)
                 if (state.seasonFilter.length) {
                     let actionPayload = action.payload;
@@ -123,7 +133,7 @@ const rootReducer = (state = initialState, action) => {
                         if (booleanValue) newArray.push(country);
                     }
                 }
-    
+
                 // y aquí sigue con los filtros de continentes
                 if (state.continentsFilter.length) {
                     let actionPayload = action.payload;
@@ -136,7 +146,7 @@ const rootReducer = (state = initialState, action) => {
                         if (booleanValue) newArray.push(country);
                     }
                 }
-    
+
                 // Finalmente preguntamos si el array madre se llenó con países filtrados o no.
                 // si se llenó, quiere decir que los filtros están activos y modificarán el renderizado de los países.
                 // pero antes, debemos eliminar los países duplicados en el array (si esque se duplicaron).
@@ -145,11 +155,21 @@ const rootReducer = (state = initialState, action) => {
                 // por lo tanto simplemente retornamos el estado con el array vacío para que muestre la bandeja vacía sin países.
                 if (newArray.length) {
                     const arraySinDuplicados = deleteDuplicates(newArray);
-                    return { ...state, renderCountries: arraySinDuplicados };
+                    return { ...state, page: 1, renderCountries: arraySinDuplicados };
                 }
-                return { ...state, renderCountries: newArray }; 
+                return { ...state, page: 1, renderCountries: newArray };
             }
-            return { ...state, renderCountries: action.payload };
+            return { ...state, page: 1, renderCountries: action.payload };
+
+        case REMOVE_ALL_FILTERS: // remueve todos los filtros seleccionados
+            return { ...state, page: 1, activitiesFilter: [], difficultyFilter: [], seasonFilter: [], continentsFilter: [], renderCountries: state.initialCountries };
+
+        case FILTER_ONLY_COUNTRIES_WITH_ACTIVITIES: // renderiza solo los países que cuentan con actividades turísticas
+            if (!state.onlyCountriesWActivities) {
+                return { ...state, page: 1, initialCountries: activitiesOnly(action.payload), renderCountries: activitiesOnly(action.payload), onlyCountriesWActivities: true };
+            }
+            // volvemos a mostrar todos los países de la BDD y limpiamos también todos los filtros
+            return { ...state, page: 1, initialCountries: state.saveInitialCountries, renderCountries: state.saveInitialCountries, onlyCountriesWActivities: false, activitiesFilter: [], difficultyFilter: [], seasonFilter: [], continentsFilter: [] };
 
         default:
             return { ...state };

@@ -1,5 +1,5 @@
 :root {
-    --view-side-padding: 0 30px;
+    --view-side-padding: 0 15px;
     --container-max-width: 1100px;
 
     --dark-bg-color: #181818;
@@ -12,7 +12,7 @@
     --light-font-color: white;
     --gray-font-color: #181818b6;
     --main-font-weight: 600;
-    --main-font-size: 14px;
+    --main-font-size: 15px;
 
     --main-border-color: rgb(0, 99, 185);
     --hover-border-color: rgba(54, 143, 221, 0.339);
@@ -22,10 +22,11 @@
     --main-box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.352);
     --little-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.118);
 
-    --height-buttons: 55%;
+    /* --height-buttons: 55%; */
+    --height-buttons: 44px;
     --main-buttons-gap: 20px;
 
-    --off-opacity: .7;
+    --off-opacity: .8;
     --on-opacity: 1;
 }
 
@@ -43,13 +44,13 @@
     background-position: top;
     background-size: cover;
     /* border-bottom: 1px solid var(--off-border-color); */
-    padding: var(--view-side-padding);
 }
 
 .navBarContainer {
     height: 80px;
     width: 100%;
     max-width: var(--container-max-width);
+    padding: var(--view-side-padding);
     display: flex;
     align-items: center;
 }
@@ -80,12 +81,12 @@
 
 .searchBar {
     height: var(--height-buttons);
-    max-width: 550px;
+    max-width: 580px;
     flex: 1;
     margin: 0 var(--main-buttons-gap);
     display: flex;
     align-items: center;
-    border: 2px solid var(--main-border-color);
+    /* border: 1px solid var(--main-border-color); */
     box-shadow: var(--little-box-shadow);
     border-radius: var(--high-border-radius);
     background-color: var(--light-bgcolor);
@@ -111,9 +112,10 @@
 }
 
 .searchBar input::placeholder{
-    font-weight: 200;
-    font-size: 17px;
-    opacity: var(--off-opacity);
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--gray-font-color);
+    opacity: .9;
 }
 
 .menuIcon {
@@ -181,10 +183,10 @@
     background: transparent;
     color: var(--gray-font-color);
     font-weight: var(--main-font-weight);
-    font-size: var(--main-font-size);
+    font-size: 15px;
     height: 100%;
     width: 100%;
-    min-width: 100px;
+    min-width: 110px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -220,6 +222,8 @@
 
 #filterDesktop{
     width: 100%;
+    padding: var(--view-side-padding);
+    max-width: var(--max-width);
 }
 
 .filterDesktopHidden{
@@ -255,9 +259,10 @@
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+    padding: var(--view-side-padding);
 }
 
-@media only screen and (min-width: 670px) {
+@media only screen and (min-width: 700px) {
     #menuBarContainer {
         display: none;
     }
@@ -270,7 +275,7 @@
 
 .menuDisplayed {
     /* height: 400px; */
-    min-height: 220px;
+    /* min-height: 220px; */
     transition: all .3s;
 }
 
@@ -283,21 +288,28 @@ li {
     width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
 }
 
 .li {
     padding: 0 15px;
     width: 100%;
-    height: 50px;
+    max-width: 400px;
+    height: 44px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    border: 1px solid var(--off-border-color);
+    border: 2px solid transparent;
     border-radius: var(--high-border-radius);
+    background-color: white;
 }
 
-.firstUl li:hover {
+.li:hover {
+    border: 2px solid var(--main-border-color);
+}
+
+#navLinkMobileLanding{
     border: 1px solid var(--main-border-color);
 }
 
@@ -312,13 +324,18 @@ li {
     color: var(--hover-font-color);
 }
 
-.firstUl p {
+.firstUl button {
     height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
-    font-size: var(--main-font-size);
+    justify-content: center;
+    font-size: 15px;
     font-weight: var(--main-font-weight);
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+    color: var(--gray-font-color);
 }
 
 .home::before {
@@ -346,9 +363,12 @@ li {
 
 #filterMobile{
     width: 100%;
+    /* padding: var(--view-side-padding); */
+    max-width: var(--max-width);
     overflow: hidden;
 }
 
 .filterMobileHidden{
     height: 0;
+    transition: all .3s;
 }
